@@ -1,0 +1,37 @@
+How to encrypt files for people you know
+----
+
+1. General principle of assymetric encryption.
+
+This program is based on assymetric encryption. That is a form of encryption
+where you use two different keys: one key to encrypt something, and another
+to decrypt it. These keys are different in that the key with which you encrypt
+something, the so-called 'public key', has less information in it, than the key
+that is used to decrypt a message - the so called 'private key'.
+
+What follows is that you can give the public key to someone you know (they
+may have it), and let them use it to encrypt a message for you. When you've
+received this message, you can decrypt it with the private key (which you
+should absolutely keep for yourself). An analogy would be of a very special,
+but empty, envelope that only you can open: you can send it to friends,
+they put a letter in it and seal it. Then they send the envelope back to you
+and - since only you can open it - you can read it.
+
+Bear in mind that even the friend cannot read the message back. In the
+physical world, where every copy of information may be unique, this would
+perhaps not be a smart thing to do. But this is the digital world, and copies
+of information are potentially endless: so the envelope can be used again and
+again, and you don't even have to make a new special envelope for another
+friend: you can produce just one public key and give a copy of it to each
+friend who wants to send you information, and they can each use this public
+key again and again.
+
+2. How encryption is used in this program.
+
+So you need a private key (to keep for yourself, to decrypt messages), and
+a public key (which is a derivate of the private key, which you can give to
+friends, and which is used to encrypt messages). And likewise, your friend
+needs a private and a public key. In order to encrypt files for people you
+know, you need to know their public key.
+
+In this program, you have a list of public keys from people you know.
