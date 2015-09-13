@@ -7,6 +7,8 @@ OBJECTS = \
   com/kjwork/data/PubKeyDatabase.class \
   com/kjwork/data/PubKeyDbEnumeration.class \
   com/kjwork/data/PubKeyRecord.class \
+  com/kjwork/gui/CFSttPane.class \
+  com/kjwork/gui/CFLogPane.class \
   com/kjwork/gui/CFDecPane.class \
   com/kjwork/gui/CFEncPane.class \
   com/kjwork/gui/CFKeyPane.class \
@@ -18,13 +20,15 @@ OBJECTS = \
   com/kjwork/gui/PubKeyImportDialog.class \
   com/kjwork/gui/MainWindow.class \
   com/kjwork/gui/Main.class \
+  com/kjwork/gui/locale/DefaultDictionary.class \
   com/kjwork/util/Base64.class \
   com/kjwork/util/FileGrab.class \
 
 ALLCLASSES = $(OBJECTS) \
 
 ALLRESOURCES = $(ALLCLASSES) \
-  com/kjwork/help/enc.txt \
+  com/kjwork/help/*.txt \
+  com/kjwork/gui/locale/*.dict \
 
 JAR = jar
 JAVA = java

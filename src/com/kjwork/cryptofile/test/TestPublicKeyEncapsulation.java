@@ -91,6 +91,7 @@ public class TestPublicKeyEncapsulation {
 			byte[] file = out.toByteArray();
 			System.err.println("Output file length is " + file.length);
 			com.kjwork.cryptofile.Util.print_binary(file);
+			System.err.println("Done");
 			
 			return file;
 			

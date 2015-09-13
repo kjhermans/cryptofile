@@ -3,6 +3,7 @@ package com.kjwork.gui;
 import java.util.Enumeration;
 import com.kjwork.data.*;
 import javax.swing.JOptionPane;
+import java.util.Locale;
 
 public class Main {
 

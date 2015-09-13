@@ -2,6 +2,10 @@ package com.kjwork.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
+import java.util.Properties;
+import java.io.InputStream;
+import java.io.IOException;
 
 public class MainWindow extends Frame implements WindowListener {
 
@@ -11,6 +15,7 @@ public class MainWindow extends Frame implements WindowListener {
     ()
   {
     super("CryptoFile");
+    this.load_dictionary();
     populate();
     this.setMinimumSize(new Dimension(600, 400));
     this.addWindowListener(this);
@@ -23,6 +28,12 @@ public class MainWindow extends Frame implements WindowListener {
       instance = new MainWindow();
     }
     return instance;
+  }
+
+  public void showSttPane
+    ()
+  {
+    lm.show(this, "STT");
   }
 
   public void showEncPane
@@ -61,6 +72,12 @@ public class MainWindow extends Frame implements WindowListener {
     lm.show(this, "RND");
   }
 
+  public void showLogPane
+    ()
+  {
+    lm.show(this, "LOG");
+  }
+
   public void windowOpened
     (WindowEvent we)
   {
@@ -97,10 +114,31 @@ public class MainWindow extends Frame implements WindowListener {
     System.exit(0);
   }
 
+  private void load_dictionary
+    ()
+  {
+    try {
+      String localestring = Locale.getDefault().toString();
+      String dictfile = "com/kjwork/gui/locale/" + localestring + ".dict";
+      InputStream in = getClass().getClassLoader().getResourceAsStream(dictfile);
+      if (in != null) {
+        dict.load(in);
+        System.err.println("Successfully loaded dictionary " + dictfile);
+        return;
+      }
+    } catch (IOException ioe) {
+      System.err.println(ioe);
+    }
+    System.err.println("Loading default dictionary");
+    dict = new com.kjwork.gui.locale.DefaultDictionary();
+  }
+
   private void populate
     ()
   {
     this.setMenuBar(CFMenu.getInstance());
+    this.add(CFSttPane.getInstance());
+    this.add(CFLogPane.getInstance());
     this.add(CFEncPane.getInstance());
     this.add(CFDecPane.getInstance());
     this.add(CFKeyPane.getInstance());
@@ -109,6 +147,8 @@ public class MainWindow extends Frame implements WindowListener {
     this.add(CFRndPane.getInstance());
     lm = new CardLayout();
     this.setLayout(lm);
+    lm.addLayoutComponent(CFSttPane.getInstance(), "STT");
+    lm.addLayoutComponent(CFLogPane.getInstance(), "LOG");
     lm.addLayoutComponent(CFEncPane.getInstance(), "ENC");
     lm.addLayoutComponent(CFDecPane.getInstance(), "DEC");
     lm.addLayoutComponent(CFKeyPane.getInstance(), "KEY");
@@ -117,5 +157,6 @@ public class MainWindow extends Frame implements WindowListener {
     lm.addLayoutComponent(CFRndPane.getInstance(), "RND");
   }
 
-  CardLayout lm;
+  private Properties dict = new Properties();
+  private CardLayout lm;
 }

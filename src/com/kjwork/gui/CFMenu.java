@@ -11,9 +11,11 @@ public class CFMenu extends MenuBar implements ActionListener {
   public static final String mtxt_openenc = "Open File to Encrypt";
   public static final String mtxt_openkey = "Manage Public Keys";
   public static final String mtxt_openprv = "Manage Private Key";
+  public static final String mtxt_status  = "Status";
+  public static final String mtxt_log     = "Log";
+  public static final String mtxt_random  = "Random";
   public static final String mtxt_opensec = "Secure This Application";
-  public static final String mtxt_close = "Quit Application";
-  public static final String mtxt_random = "Random";
+  public static final String mtxt_close   = "Quit Application";
 
   private CFMenu
     ()
@@ -55,10 +57,16 @@ public class CFMenu extends MenuBar implements ActionListener {
     menuitem_close.addActionListener(this);
 
     Menu menu_tools = new Menu("Tools");
+    MenuItem menuitem_status = new MenuItem(mtxt_status);
+    MenuItem menuitem_log = new MenuItem(mtxt_log);
     MenuItem menuitem_random = new MenuItem(mtxt_random);
     MenuItem menuitem_opensec = new MenuItem(mtxt_opensec);
+    menu_tools.add(menuitem_status);
+    menu_tools.add(menuitem_log);
     menu_tools.add(menuitem_random);
     menu_tools.add(menuitem_opensec);
+    menuitem_status.addActionListener(this);
+    menuitem_log.addActionListener(this);
     menuitem_random.addActionListener(this);
     menuitem_opensec.addActionListener(this);
     this.add(menu_tools);
@@ -91,6 +99,9 @@ public class CFMenu extends MenuBar implements ActionListener {
       if (i.getLabel().equals(mtxt_close)) {
         System.exit(0);
       }
+      if (i.getLabel().equals(mtxt_status)) {
+        MainWindow.getInstance().showSttPane();
+      }
       if (i.getLabel().equals(mtxt_opendec)) {
         MainWindow.getInstance().showDecPane();
       }
@@ -108,6 +119,9 @@ public class CFMenu extends MenuBar implements ActionListener {
       }
       if (i.getLabel().equals(mtxt_random)) {
         MainWindow.getInstance().showRndPane();
+      }
+      if (i.getLabel().equals(mtxt_log)) {
+        MainWindow.getInstance().showLogPane();
       }
       if (i.getLabel().equals("Help on " + mtxt_openenc)) {
         CFHelpWindow.getInstance().doPopup("enc");

@@ -3,6 +3,7 @@ package com.kjwork.data;
 import java.io.*;
 import java.security.*;
 import java.security.interfaces.*;
+import com.kjwork.gui.*;
 
 public class PrivKeyStore {
 
@@ -113,7 +114,7 @@ public class PrivKeyStore {
         privkey = com.kjwork.cryptofile.Util.openRSAPrivateKeyPEMFile(
           new FileInputStream(privkeyfile)
         );
-        System.err.println("Private key successfully loaded.");
+        CFLogPane.getInstance().logline("Private key successfully loaded.");
       } catch (IOException ioe) {
         System.err.println("Couldn't load private key " + path + ":" + ioe);
       } catch (GeneralSecurityException gse) {

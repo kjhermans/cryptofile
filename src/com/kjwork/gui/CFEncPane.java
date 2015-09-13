@@ -61,8 +61,10 @@ public class CFEncPane extends Panel implements ActionListener {
     int returnVal = chooser.showOpenDialog(MainWindow.getInstance());
     if (returnVal == JFileChooser.APPROVE_OPTION) {
       String path = chooser.getSelectedFile().getPath();
-      System.err.println(path);
+      long length = chooser.getSelectedFile().length();
+      //System.err.println(path);
       file_in.setText(path);
+      file_in_display.setText(path + " (" + length + " bytes)");
       file_out.setText(path + ".enc");
     }
   }
@@ -80,6 +82,11 @@ public class CFEncPane extends Panel implements ActionListener {
       JOptionPane.YES_NO_OPTION
     );
     if (result == JOptionPane.YES_OPTION) {
+      CFLogPane.getInstance().logline("--- Encrypt");
+      CFLogPane.getInstance().logline("    Source: " + path);
+      CFLogPane.getInstance().logline("    Destination: " + outpath);
+      CFLogPane.getInstance().logline("    Public key: " + pubkeypath);
+      boolean failure = false;
       try {
         RSAPublicKey key = Util.openRSAPublicKeyPEMFile(pubkeypath);
         InputStream in = new FileInputStream(path);
@@ -97,12 +104,17 @@ public class CFEncPane extends Panel implements ActionListener {
           JOptionPane.WARNING_MESSAGE
         );
       } catch (Exception e) {
+        CFLogPane.getInstance().logline("--- Failure: " + e);
         JOptionPane.showMessageDialog(
           MainWindow.getInstance(),
           "Exception during encryption: " + e,
           "Encryption Message",
           JOptionPane.WARNING_MESSAGE
         );
+        failure = true;
+      }
+      if (!failure) {
+        CFLogPane.getInstance().logline("--- Success");
       }
     }
   }
@@ -162,6 +174,18 @@ public class CFEncPane extends Panel implements ActionListener {
     gbl.setConstraints(button_browse, c);
     this.add(button_browse);
 
+    label = new Label("Plaintext file:");
+    c.gridwidth = 1;
+    c.weightx = 0.2;
+    gbl.setConstraints(label, c);
+    this.add(label);
+
+    c.gridwidth = GridBagConstraints.REMAINDER;
+    c.weightx = 1.0;
+    file_in_display = new Label();
+    gbl.setConstraints(file_in_display, c);
+    this.add(file_in_display);
+
     label = new Label("Encrypted file:");
     c.gridwidth = 1;
     c.weightx = 0.2;
@@ -184,6 +208,7 @@ public class CFEncPane extends Panel implements ActionListener {
   }
 
   private TextField file_in;
+  private Label file_in_display;
   private Label file_out;
   private Choice recipients;
   private Button button_go;

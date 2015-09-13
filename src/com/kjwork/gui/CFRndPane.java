@@ -64,7 +64,7 @@ public class CFRndPane extends Panel implements ActionListener, MouseMotionListe
   private void enter_random
     (int n)
   {
-    byte[] b = { (byte)n, (byte)(n >> 8), (byte)(n >> 16), (byte)(n >> 24) };
+    byte[] b = { (byte)n };
     rng.setSeed(b);
     String s = randomstring.getText();
     if (s.length() > 32) {
@@ -91,8 +91,10 @@ public class CFRndPane extends Panel implements ActionListener, MouseMotionListe
     label.addMouseMotionListener(this);
 
     explainer = new TextArea(
-      "In this pane, you can increase the entropy pool of the application," +
-      " by moving your mouse as randomly around as you like."
+      "You can increase the entropy pool of the application," +
+      " by moving your mouse randomly around inside the pane.\n" +
+      "Progress of a pseudorandom bytestream (not your actual random)" +
+      " will be displayed inside the textfield."
       , 6, 80, TextArea.SCROLLBARS_NONE
     );
     explainer.setEditable(false);
@@ -112,7 +114,7 @@ public class CFRndPane extends Panel implements ActionListener, MouseMotionListe
     gbl.setConstraints(randomstring, c);
     randomstring.setEditable(false);
     this.add(randomstring);
-    //randomstring.addMouseMotionListener(this);
+    randomstring.addMouseMotionListener(this);
 
   }
 
